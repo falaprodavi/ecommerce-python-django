@@ -6,9 +6,7 @@ from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
-
-def register_view(request):    
-    
+def register_view(request):        
     if request.method == 'POST':
         form = UserRegisterForm(request.POST or None)
         if form.is_valid():
