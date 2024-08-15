@@ -1,5 +1,7 @@
-{% extends "base.html" %} {% load static %} {% block 'body' %}
+{% extends "base.html" %} 
+{% load static %} 
 
+{% block 'body' %}
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
   <h1 class="text-center text-white display-6">Login</h1>
@@ -21,7 +23,7 @@
             <h1 class="text-primary">Login</h1>
             <p class="mb-4">
               Don't have an account?
-              <a href="#">Create here</a>.
+              <a href="{% url "userauths:sign-up" %}">Create here</a>.
             </p>
             {% if form.errors %}
             <div class="alert-danger" style="text-align: left">
