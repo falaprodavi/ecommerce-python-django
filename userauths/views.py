@@ -3,9 +3,10 @@ from userauths.forms import UserRegisterForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.conf import settings
+from userauths.models import User
 
 
-User = settings.AUTH_USER_MODEL
+#User = settings.AUTH_USER_MODEL
 
 def register_view(request):        
     if request.method == 'POST':
@@ -27,9 +28,9 @@ def register_view(request):
     
     return render(request, 'userauths/sign-up.html', context)
 
-def login_view(request):
+def login_view(request):    
     if request.user.is_authenticated:
-        messages.success(request, f"hey you are already logged in.")
+        messages.warning(request, f"hey you are already logged in.")
         return redirect('core:index')
     
     if request.method == 'POST':
@@ -37,25 +38,24 @@ def login_view(request):
         password = request.POST.get('password')
         
         try:
-            user = User.objects.get(email=email)
+            user = User.objects.get(email=email) 
+            user = authenticate(request, email=email, password=password)
+            
+            if user is not None:
+                login(request, user)
+                messages.success(request, "You are logged in")
+                return redirect("core:index")
+        
+            else:
+                messages.warning(request, "User Does Not Exists. Create an account")         
+            
+            
         except:
-            messages.warning(request, f'User with {email} does not exist')
+            messages.warning(request, f'User with {email} does not exist')       
             
-        user = authenticate(request, email=email, password=password)
         
-        if user is not None:
-            login(request, user)
-            messages.success(request, "You are logged in,")
-            return redirect ("core:index")
-        
-        else:
-            messages.warning(request, "User Does Not Exists. Create an account")
-            
-    context = {
-        
-    }
     
-    return render(request, 'userauths/sign-in.html', context)
+    return render(request, 'userauths/sign-in.html')
         
          
 def logout_view(request):
