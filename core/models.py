@@ -57,7 +57,7 @@ class Tags(models.Model):
 class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length=10, max_length=30, prefix="cat", alphabet="abcdefgh12345")
     
-    title = models.CharField(max_length=100, default="Nestufy")
+    title = models.CharField(max_length=100, default="Nestify")
     image = models.ImageField(upload_to=user_directory_path, default="vendor.jpg")
     description = models.TextField(null=True, blank=True)
     
@@ -83,10 +83,11 @@ class Vendor(models.Model):
 # Product Model
     
 class Product (models.Model):
-    pid = ShortUUIDField(unique=True, length=10, max_length=30, prefix="cat", alphabet="abcdefgh12345")
+    pid = ShortUUIDField(unique=True, length=10, max_length=30, alphabet="abcdefgh12345")
     
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
     
     title = models.CharField(max_length=100, default="Fresh Pear")
     image = models.ImageField(upload_to=user_directory_path, default="product.jpg")
@@ -96,7 +97,7 @@ class Product (models.Model):
     old_price = models.DecimalField(max_digits=999999999999, decimal_places=2, default=200.99)    
     
     specifications = models.TextField(null=True, blank=True)
-    tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
+    #tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
     
     product_status = models.CharField(choices=STATUS, max_length=10, default='in_review')
     
@@ -157,6 +158,7 @@ class CartOrder(models.Model):
 class CartOrderItems(models.Model):
     
     order = models.ForeignKey(CartOrder, on_delete=models.CASCADE)
+    invoice_no = models.CharField(max_length=200)
     product_status = models.CharField(max_length=200)
     item = models.CharField(max_length=200)
     image = models.CharField(max_length=200)
