@@ -2,11 +2,11 @@
 
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Shop</h1>
+    <h1 class="text-center text-white display-6">Category Shop</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Shop</li>
+        <li class="breadcrumb-item active text-white">Category</li>
     </ol>
 </div>
 <!-- Single Page Header End -->
@@ -15,7 +15,7 @@
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Fresh fruits shop</h1>
+        <h1 class="mb-4">{{categories.count}} Categories</h1>
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
@@ -45,6 +45,7 @@
                                 <div class="mb-3">
                                     <h4>Categories</h4>
                                     <ul class="list-unstyled fruite-categorie">
+                                        
                                         {% for c in categories %}
                                         <li>
                                             <div class="d-flex justify-content-between fruite-name">
@@ -168,14 +169,14 @@
 
                             <!-- Shop Start-->
 
-                            {% for p in products %}
+                            {% for c in categories %}
 
                             <div class="col-md-6 col-lg-6 col-xl-4">
                                 <div class="rounded position-relative fruite-item">
-                                    <a href="#">
                                     <div class="fruite-img">
+                                        <a href="{% url "core:category-product-list" c.cid %}">
                                       <img
-                                        src="{{p.image.url}}"
+                                        src="{{c.image.url}}"
                                         class="img-fluid w-100 rounded-top"
                                         alt=""
                                       />
@@ -185,27 +186,17 @@
                                       class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                       style="top: 10px; left: 10px"
                                     >
-                                      {{p.category.title}}
+                                      {{c.category.count}} Product{{c.category.count|pluralize:"s"}}
                                     </div>
                                     <div
                                       class="p-4 border border-secondary border-top-0 rounded-bottom"
                                     >
                                     <p>
-                                      {{p.vendor.title}}
+                                      {{c.vendor.title}}
                                     </p>
-                                    <a href="#"><h4>{{p.title}}</h4></a>  
-                                      <p>
-                                        {{p.description}}
-                                      </p>
-                                      <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <p class="text-dark fs-5 fw-bold mb-0">{{p.price}} / kg</p>
-                                        <a
-                                          href="#"
-                                          class="btn border border-secondary rounded-pill px-3 text-primary"
-                                          ><i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                          Add to cart</a
-                                        >
-                                      </div>
+                                    <a href="{% url "core:category-product-list" c.cid %}"><h4>{{c.title}}</h4></a>  
+                         
+                  
                                     </div>
                                   </div>
                             </div>
