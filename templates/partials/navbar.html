@@ -36,16 +36,20 @@
           <a href="{% url "core:index" %}" class="nav-item nav-link">Home</a>
           <a href="{% url "core:products" %}" class="nav-item nav-link">Products</a>
           <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
+            <a href="{% url "core:category-list" %}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
             <div class="dropdown-menu m-0 bg-secondary rounded-0">
 
               {% for c in categories %}
               <a href="{% url "core:category-product-list" c.cid %}" class="dropdown-item">{{c.title}}</a>
               {% endfor %}
+
+             <hr/>
+
+              <a href="{% url "core:category-list" %}" class="dropdown-item">All Categories</a>
               
             </div>
           </div>
-          <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
+          <a href="{% url "core:vendor-list" %}" class="nav-item nav-link">Vendors</a>
           <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
             <div class="dropdown-menu m-0 bg-secondary rounded-0">
